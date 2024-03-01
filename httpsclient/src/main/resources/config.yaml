@@ -1,0 +1,26 @@
+http:
+  port: "7081"
+  timeout: "90000"
+  
+https:
+  serverhost: "httpsserver.us-e2.cloudhub.io"
+  serverport: "8082"
+  servertimeout: "90000"
+  servertrustorekey: "keystore.jks"
+  servertrustorepassword: "changeit"
+  serveralias: "tomcat"
+    
+sfdc:
+  username: "your-username"
+  password: "your-password"
+  token: "your-token"
+
+file:
+  accountsDir: "C:/Sayeed/Trainings/Mulesoft/mule4/APDevFundamentals_studentFiles_SP_13oct2023/resources"
+  
+db:
+  host: "mudb.mule-training.com"
+  port: "3306"
+  user: "mule"
+  password: "mule"
+  database: "training"  

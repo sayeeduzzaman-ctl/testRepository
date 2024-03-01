@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="httpsclientFlow" doc:id="68d02c4c-777e-4fc2-8ebc-efc7f1efb230" >
+		<http:listener doc:name="http://localhost:7081/httpsclient" doc:id="606117fe-c37f-4b0b-9aab-c12505da48cc" config-ref="HTTP_Listener_config" path="/httpsclient"/>
+		<ee:transform doc:name="Transform Message" doc:id="b90af092-eefa-41ee-91cf-3e256bdc1e85" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "request received successfully by httpsclient over http://localhost:7081/httpsclient/"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="5007f271-7b02-4aaf-905f-61290a79f6c6" message="#[payload]"/>
+		<http:request method="GET" doc:name="CallHttpsServerFromClient" doc:id="e2a006f5-6b5e-40d3-a539-76e0f30f373f" config-ref="HTTPS_Request_configuration" path="/target"/>
+		<ee:transform doc:name="Transform Message" doc:id="950b94b1-c898-40cd-8494-83da30b99227" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "https call successful from htt://localhost:7081/httpclient -->to -->https://httpsserver.us-e2.cloudhub.io/target"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="93999f1c-de61-44ad-9b30-1bf4724b056b" message="#[payload]"/>
+	</flow>
+</mule>
